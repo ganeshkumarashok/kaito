@@ -103,6 +103,7 @@ else:
     ]
 
     if valid_adapters_list:
+        print("valid_adapters_list",valid_adapters_list)
         adapter_names, weights = [], []
         for adapter_path in valid_adapters_list:
             adapter_name = os.path.basename(adapter_path)
@@ -122,6 +123,7 @@ else:
 
         model.set_adapter("combined_adapter")
 
+
         # To avoid any potential future operations that use non-combined adapters
         for adapter in adapter_names:
             model.delete_adapter(adapter)
@@ -129,10 +131,14 @@ else:
         active_adapters = model.active_adapters
         if len(active_adapters) != 1 or active_adapters[0] != "combined_adapter":
             raise ValueError(f"Adpaters is input but not merged correctlly")
+        print("Adapter added:",sorted(adapter_names))
     else:
         print("Warning: Did not find any valid adapters mounted, using base model")
         model = base_model
+    
     print("Adapter added: ",sorted(adapter_names))
+
+print("Adapter added: ",sorted(adapter_names))
     
 print("Model:", model)
 

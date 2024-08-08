@@ -151,9 +151,7 @@ prepare-kaito-addon-identity:
 .PHONY: az-patch-install-helm
 az-patch-install-helm: ## Update Azure client env vars and settings in helm values.yml
 	az aks get-credentials --name $(AZURE_CLUSTER_NAME) --resource-group $(AZURE_RESOURCE_GROUP)
-
-	yq -i '(.image.repository)                                              = "$(REGISTRY)/workspace"'                    ./charts/kaito/workspace/values.yaml
-	yq -i '(.image.tag)                                                     = "$(IMG_TAG)"'                               ./charts/kaito/workspace/values.yaml
+	cat ./charts/kaito/workspace/values.yaml
 
 	helm install kaito-workspace ./charts/kaito/workspace --namespace $(KAITO_NAMESPACE) --create-namespace
 
